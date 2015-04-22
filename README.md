@@ -1,4 +1,4 @@
-## angunode
+## Angunode
 Data table demo and configurable model in angularjs, and also a MEAN demo
 
 ##Before You Begin
