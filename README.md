@@ -23,8 +23,8 @@ Open http://localhost:3000/html/datatable.html#blog
 When first time run the application, there will auto generate 100 records of model "blog"
 
 ##Make your own model
-You can make your own model like the "blog" model demo fowllow the below steps.
-* create your onwer model under /src/public/model/
+You can make your model like the "blog" model demo fowllow the below steps.
+* create your model under /src/public/model/
 * add the model name in /src/public/model/conf.js
 * run npm start
 * wow, it's so simple and amazing!!
