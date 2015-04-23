@@ -2,7 +2,7 @@
 /**
  * Created by harry on 15/4/21.
  */
-module.exports = function (mongoose, modelConf) {
+module.exports = function (mongoose, modelConf, name) {
 	var Schema = mongoose.Schema;
 	var Model = new Schema(modelConf.schema);
 
@@ -30,6 +30,7 @@ module.exports = function (mongoose, modelConf) {
 		return query;
 	}
 	Model.statics.getList = function (param, call) {
+		//call(name);return;
 		var page = param.page || 0;
 		var pagesize = param.pagesize || modelConf.defaultPageSize || 20;
 		var query = getQuery(param);

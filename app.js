@@ -33,11 +33,12 @@ var model = require('./src/models/model');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/blog');
 for(var i=0;i<modelConf.length;i++) {
-	var conf = requirejs("src/public/model/" + modelConf[0]);
+	var conf = requirejs("src/public/model/" + modelConf[i]);
 	conf.server.name = conf.name;
-	model(mongoose, conf.server);
-	conf.server.initData();
-	app.use('/' + modelConf[0], route(conf.name));
+	model(mongoose, conf.server, conf.name);
+	//console.log(conf.name);
+	conf.server.initData && conf.server.initData();
+	app.use('/' + modelConf[i], route(conf.name));
 }
 
 // catch 404 and forward to error handler
