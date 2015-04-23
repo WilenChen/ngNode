@@ -4,6 +4,12 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var requirejs = require('requirejs');
+
+requirejs.config({
+	baseUrl: __dirname,
+	nodeRequire: require
+});
 
 
 var app = express();
@@ -20,8 +26,18 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'src/public')));
 app.use('/assert_bower', express.static(path.join(__dirname,  'bower_components')));
 
-var blog = require('./src/routes/blog');
-app.use('/blog', blog);
+//var blog = require('./src/routes/blog');
+var modelConf = require("./src/public/model/conf");
+var route = require('./src/routes/route');
+var model = require('./src/models/model');
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/blog');
+for(var i=0;i<modelConf.length;i++) {
+	var conf = requirejs("src/public/model/" + modelConf[0]);
+	conf.server.name = conf.name;
+	model(mongoose, conf.server);
+	app.use('/' + modelConf[0], route(conf.name));
+}
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -55,11 +71,9 @@ app.use(function(err, req, res, next) {
 });
 
 // Mongod conf, blog model and blog controller
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/blog');
-require('./src/models/blog')(mongoose);
-var Blog = mongoose.model('Blog');
-Blog.initData();
+//require('./src/models/blog')(mongoose);
+//var Blog = mongoose.model('Blog');
+//Blog.initData();
 
 console.log("open http://localhost:3000/html/datatable.html#blog");
 module.exports = app;

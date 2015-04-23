@@ -158,6 +158,7 @@
 <script src="/assert_bower/bootstrap-datepicker/js/bootstrap-datepicker.js" ></script>
 <script src="/assert_bower/angular/angular.min.js"></script>
 <script src="/assert_bower/requirejs/require.js"></script>
+<script src="/controller/extendRoutes.js"></script>
 
 
 <script>
@@ -273,8 +274,10 @@
         }
         var hash = location.hash;
         if(hash && hash.split("#")[1]){
-            require(['/javascripts/model/' + hash.split("#")[1] + ".js"], function(model) {
-                $scope.appModel = model;
+            require(['/model/' + hash.split("#")[1] + ".js"], function(model) {
+                model.client.name = model.name;
+                extendRoutes(model.client);
+                $scope.appModel = model.client;
                 $scope.list();
             });
         }
