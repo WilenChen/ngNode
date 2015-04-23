@@ -1,5 +1,5 @@
 ## Angunode
-Data table demo and configurable model in angularjs, and also a MEAN demo
+Data table demo and ONLY one configura model both in server and client, and also a MEAN demo: Mongodb, Express, Angularjs, Node.
 
 ##Before You Begin
 This demo runs under MEAN, you can find some infomation about MEAN below.
@@ -24,6 +24,7 @@ When first time run the application, there will auto generate 100 records of mod
 
 ##Make your own model
 You can make your own model like the "blog" model demo fowllow the below steps.
-* make express routes with CRUD actions under /src/routes/
-* make Mongod model with Schema and CRUD actions under /src/models/
-* make angularjs modelunder /src/public/javascript/model/, and implement schema configuration, and list, add, remove method
+* create your onwer model under /src/public/model/
+* add the model name in /src/public/model/conf.js
+* run npm start
+* wow, it's so simple and amazing!!
