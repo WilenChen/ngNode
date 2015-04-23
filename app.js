@@ -36,6 +36,7 @@ for(var i=0;i<modelConf.length;i++) {
 	var conf = requirejs("src/public/model/" + modelConf[0]);
 	conf.server.name = conf.name;
 	model(mongoose, conf.server);
+	conf.server.initData();
 	app.use('/' + modelConf[0], route(conf.name));
 }
 

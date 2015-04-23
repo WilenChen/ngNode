@@ -5,9 +5,7 @@
 module.exports = function (mongoose, modelConf) {
 	var Schema = mongoose.Schema;
 	var Model = new Schema(modelConf.schema);
-	Model.statics.initData = function () {
-		modelConf.initData && modelConf.initData(modelConf);
-	}
+
 	function getQuery(param){
 		var key =  param.key;
 		var sort = param.sort || modelConf.defSortField;

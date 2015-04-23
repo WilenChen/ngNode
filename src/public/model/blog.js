@@ -20,18 +20,27 @@ define(function () {
 			queryFields: ["title", "author"],
 			defaultPageSize: 15,
 			initData: function () {
-				var result = [];
-				for (var i = 0; i < 100; i++) {
-					result.push({
-						title: "title" + i,
-						author: "author" + i,
-						body: "body body body body body body body body body body body body body body body body body body body body body body ",
-						date: new Date(new Date().valueOf() + (i * 1000 * 3600 * 24)),
-						category: ["Mongod", "Express", "Angularjs", "Node"][Math.floor(Math.random() * 4)],
-						recommend: false
-					});
-				}
-				return result;
+				var Model = require("mongoose").model(this.name);
+				Model.findOne({}, function (err, record) {
+					if(!record){
+						var data = [];
+						for (var i = 0; i < 100; i++) {
+							data.push({
+								title: "title" + i,
+								author: "author" + i,
+								body: "body body body body body body body body body body body body body body body body body body body body body body ",
+								date: new Date(new Date().valueOf() + (i * 1000 * 3600 * 24)),
+								category: ["Mongod", "Express", "Angularjs", "Node"][Math.floor(Math.random() * 4)],
+								recommend: false
+							});
+						}
+						Model.create(data, function (err) {
+							if(err){
+								console.log("initData error:" + err);
+							}
+						});
+					}
+				});
 			}
 		},
 		client: {
