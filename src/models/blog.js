@@ -2,15 +2,6 @@
 /**
  * Created by harry on 15/4/21.
  */
-//var getComments = function (i) {
-//	var commentsCount = Math.round(Math.random() * 5);
-//	var reuslt = [];
-//	for(var j=0;j<commentsCount;j++){
-//		result.push({
-//			body :
-//		})
-//	}
-//};
 var getData = function () {
 	var result = [];
 	for(var i=0;i<100;i++){
