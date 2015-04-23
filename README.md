@@ -1,5 +1,9 @@
 ## Angunode
 Data table demo and ONLY ONE configuration model both in server and client, and also a MEAN demo: Mongodb, Express, Angularjs, Node.
+##Features
+* A demo of MEAN application.
+* It's very easy make your own application with simple configuration.
+* Including CRUD routes both in server and client, and CRUD action in Mongodb Model.
 
 ##Before You Begin
 This demo runs under MEAN, you can find some infomation about MEAN below.
@@ -28,3 +32,5 @@ You can make your model like the "blog" model demo fowllow the below steps.
 * add the model name in /src/public/model/conf.js
 * run npm start
 * wow, it's so simple and amazing!!
+
+
