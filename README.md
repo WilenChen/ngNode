@@ -1,5 +1,5 @@
 ## Angunode
-Data table demo and ONLY ONE configura model both in server and client, and also a MEAN demo: Mongodb, Express, Angularjs, Node.
+Data table demo and ONLY ONE configuration model both in server and client, and also a MEAN demo: Mongodb, Express, Angularjs, Node.
 
 ##Before You Begin
 This demo runs under MEAN, you can find some infomation about MEAN below.
