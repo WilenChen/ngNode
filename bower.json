@@ -1,0 +1,22 @@
+{
+  "name": "angunode",
+  "version": "0.0.0",
+  "authors": [
+    "hcnode <7372@163.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.2.21",
+    "bootstrap-datepicker": "~1.4.0",
+    "bootstrap": "3.2.0",
+    "fontawesome": "4.3.0",
+    "requirejs": "~2.1.17"
+  }
+}
