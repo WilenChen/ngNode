@@ -13,7 +13,11 @@ This demo runs under MEAN, you can find some infomation about MEAN below.
 * Node.js - Start by going through [Node.js Official Website](http://nodejs.org/) and this [StackOverflow Thread](http://stackoverflow.com/questions/2353818/how-do-i-get-started-with-node-js), which should get you going with the Node.js platform in no time.
 
 ##Usages
-install dependences
+install bower dependences
+```bash
+$ bower install
+```
+install node dependences
 ```bash
 $ npm install
 ```
