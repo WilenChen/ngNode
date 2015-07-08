@@ -1,0 +1,1 @@
+和awesome的一样，最后打开浏览器：http://localhost:9527/movie
