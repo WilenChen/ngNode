@@ -4,7 +4,7 @@ Simply and quickly make your owner MEAN application.
 * Real time MEAN application.
 * Simply and quickly make your own application with simple configuration.
 * Auto generating CRUD routes both in server and client, and CRUD action in Mongodb Model.
-* An User model within it, and with [passport.js](https://github.com/jaredhanson/passport) authenticate nactive
+* An User model within it, and with [passport.js](https://github.com/jaredhanson/passport) authenticate native
 
 ##Before You Begin
 This demo runs under MEAN, you can find some infomation about MEAN below.
