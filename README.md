@@ -1,4 +1,4 @@
-## Angunode
+## ngNode
 Simply and quickly make your owner MEAN application.
 ##Features
 * Real time MEAN application.
@@ -16,18 +16,18 @@ This demo runs under MEAN, you can find some infomation about MEAN below.
 ##Usages
 dependencies:
 ```javascript
-"angunode" : "^1.0.1"
+"ngNode" : "^1.0.1"
 ```
 make a config object and call lib as function directly
 ```javascript
 var config = {
 	appName : "testapp",
-	mongodConnection : "mongodb://localhost:27017/angunode",
+	mongodConnection : "mongodb://localhost:27017/ngnode",
 	modelConfig : [
     // custom model config object
 	]
 };
-require("angunode")(config);
+require("ngNode")(config);
 ```
 visit in chrome: http://localhost:9527/user
 
