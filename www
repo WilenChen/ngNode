@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-var debug = require('debug')('angunode:server');
+var debug = require('debug')('ngnode:server');
 var http = require('http');
 
 module.exports = function (app) {

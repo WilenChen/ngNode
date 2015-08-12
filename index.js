@@ -6,17 +6,17 @@ var requirejs = require('requirejs');
 var session = require('express-session');
 var mongoStore = require('connect-mongo')((session));
 var www = require("./www");
-
+var fs = require('fs');
 
 module.exports = function (config) {
 	var mongodConnection = config.mongodConnection;
 	if(!mongodConnection){
 		throw "mongodConnection not found";
 	}
-	var modelConf = config.modelConfig;
-	if(!modelConf){
-		throw "modelConf not found";
-	}
+	//var modelConf = config.modelConfig;
+	//if(!modelConf){
+	//	throw "modelConf not found";
+	//}
 	requirejs.config({
 		baseUrl: __dirname,
 		nodeRequire: require
@@ -35,7 +35,7 @@ module.exports = function (config) {
 		store: new mongoStore({
 			url: mongodConnection
 		}),
-		cookie: { maxAge: 1000*60*24}
+		cookie: { maxAge: 1000*60*60*24*7}
 	}));
 
 	app.use(require("./src/polices/auth"));
@@ -43,13 +43,16 @@ module.exports = function (config) {
 	var model = require('./src/models/model');
 	var mongoose = require('mongoose');
 	mongoose.connect(mongodConnection);
-	var userModel = requirejs("src/public/model/user");
-	modelConf.splice(0, 0, userModel);
-	for(var i=0;i<modelConf.length;i++) {
-		model(mongoose, modelConf[i]);
-		modelConf[i].initData && modelConf[i].initData(mongoose);
-		app.use('/' + modelConf[i].name, route(modelConf[i]));
-	}
+
+	var bcrypt = require('bcrypt');
+	var userModel = require("./src/models/user")(bcrypt, mongoose);
+
+	model(mongoose, userModel, userModel);
+	userModel.initData && userModel.initData(mongoose);
+	app.use('/' + userModel.name, route(userModel));
+
+	require("./src/models/util").init("user", "./");
+	require("./src/models/util").createCustom(app, config, __dirname);
 
 	app.use(function(req, res, next) {
 	  var err = new Error('Not Found');
@@ -80,6 +83,6 @@ module.exports = function (config) {
 			err: err
 		});
 	});
-	console.log("open http://localhost:9527/movie");
+	console.log("open http://localhost:9527/user");
 	www(app);
 }

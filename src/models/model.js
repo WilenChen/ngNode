@@ -2,7 +2,7 @@
 /**
  * Created by harry on 15/4/21.
  */
-module.exports = function (mongoose, modelConf) {
+module.exports = function (mongoose, modelConf, config) {
 	var Schema = mongoose.Schema;
 	var Model = new Schema(modelConf.schema);
 
@@ -48,23 +48,69 @@ module.exports = function (mongoose, modelConf) {
 			}
 		})
 	}
-	Model.statics.update = function (model, call) {
-		var Model = mongoose.model(modelConf.name);
-		Model.findOneAndUpdate({_id : model._id}, model, function (err) {
-			call(err);
-		})
+	function hook(req, res, model, action, cb) {
+		if(config.on && config.on[action]){
+			config.on[action](req, res, model, cb);
+		}else{
+			cb(model);
+		}
 	}
-	Model.statics.add = function (model, call) {
-		var Model = mongoose.model(modelConf.name);
-		model.save(function (result) {
-			call();
+
+	Model.statics.update = function (req, res, model, call) {
+		hook(req, res, model, "beforeUpdate",  function (newModel) {
+			if(newModel.error){
+				call(err);
+			}else {
+				var Model = mongoose.model(modelConf.name);
+				Model.findOneAndUpdate({_id: model._id}, newModel, function (err) {
+					if (err) {
+						call(err);
+					} else {
+						hook(req, res, model, "afterUpdate", function (result) {
+							call((result || {}).error);
+						});
+					}
+				})
+			}
+		});
+
+	}
+	Model.statics.add = function (req, res, model, call) {
+		hook(req, res, model, "beforeCreate",  function (newModel) {
+			if(newModel.error){
+				call(err);
+			}else {
+				var Model = mongoose.model(modelConf.name);
+				newModel.save(function (err, result) {
+					if (err) {
+						call(err);
+					} else {
+						hook(req, res, model, "afterCreate", function (result) {
+							call((result || {}).error);
+						});
+					}
+				});
+			}
 		});
 	}
-	Model.statics.remove = function (id, call) {
-		var Model = mongoose.model(modelConf.name);
-		Model.findByIdAndRemove({_id : id}, function (err) {
-			call(err);
-		})
+	Model.statics.remove = function (req, res, id, call) {
+		hook(req, res, id, "beforeRemove",  function (newModel) {
+			if(newModel.error){
+				call(err);
+			}else {
+				var Model = mongoose.model(modelConf.name);
+				Model.findByIdAndRemove({_id : id}, function (err) {
+					if (err) {
+						call(err);
+					} else {
+						hook(req, res, id, "afterRemove", function (result) {
+							call((result || {}).error);
+						});
+					}
+				})
+			}
+		});
+
 	}
 	mongoose.model(modelConf.name, Model);
 }

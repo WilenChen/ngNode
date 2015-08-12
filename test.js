@@ -3,7 +3,7 @@
  */
 var config = {
 	appName : "test",
-	mongodConnection : "mongodb://localhost:27017/angunode",
+	mongodConnection : "mongodb://localhost:27017/ngnode",
 	modelConfig : [
 
 	]

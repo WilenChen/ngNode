@@ -1,13 +1,13 @@
 {
-  "name": "angunode",
-  "version": "0.0.1",
-  "private": true,
+  "name": "ngnode",
+  "version": "2.0.2",
   "scripts": {
-    "start": "node ./bin/www"
+    "postinstall": "bower install"
   },
   "dependencies": {
     "bcrypt": "^0.8.3",
     "body-parser": "~1.12.0",
+    "browserify": "^10.2.4",
     "connect": "^3.3.5",
     "connect-mongo": "0.8.1",
     "cookie-parser": "~1.3.4",
@@ -16,9 +16,32 @@
     "express": "~4.12.2",
     "express-session": "^1.11.3",
     "mongoose": "4.0.1",
-    "q": "1.2.0",
-    "q-parallel": "^1.0.1",
     "request": "2.55.0",
     "requirejs": "2.1.17"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hcnode/ngNode.git"
+  },
+  "keywords": [
+    "mean",
+    "node",
+    "mongod"
+  ],
+  "author": {
+    "name": "hcnode"
+  },
+  "license": "MIT",
+  "readme": "## ngNode\nSimply and quickly make your owner MEAN application.\n##Features\n* Real time MEAN application.\n* Simply and quickly make your own application with simple configuration.\n* Auto generating CRUD routes both in server and client, and CRUD action in Mongodb Model.\n* An User model within it, and with [passport.js](https://github.com/jaredhanson/passport) authenticate native\n\n##Before You Begin\nThis demo runs under MEAN, you can find some infomation about MEAN below.\n* MongoDB - Go through [MongoDB Official Website](http://mongodb.org/) and proceed to their [Official Manual](http://docs.mongodb.org/manual/), which should help you understand NoSQL and MongoDB better.\n* Express - The best way to understand express is through its [Official Website](http://expressjs.com/), which has a [Getting Started](http://expressjs.com/starter/installing.html) guide, as well as an [ExpressJS Guide](http://expressjs.com/guide/error-handling.html) guide for general express topics. You can also go through this [StackOverflow Thread](http://stackoverflow.com/questions/8144214/learning-express-for-node-js) for more resources.\n* AngularJS - Angular's [Official Website](http://angularjs.org/) is a great starting point. You can also use [Thinkster Popular Guide](http://www.thinkster.io/), and the [Egghead Videos](https://egghead.io/).\n* Node.js - Start by going through [Node.js Official Website](http://nodejs.org/) and this [StackOverflow Thread](http://stackoverflow.com/questions/2353818/how-do-i-get-started-with-node-js), which should get you going with the Node.js platform in no time.\n\n##Usages\ndependencies:\n```javascript\n\"ngNode\" : \"^1.0.1\"\n```\nmake a config object and call lib as function directly\n```javascript\nvar config = {\n\tappName : \"testapp\",\n\tmongodConnection : \"mongodb://localhost:27017/ngnode\",\n\tmodelConfig : [\n    // custom model config object\n\t]\n};\nrequire(\"ngNode\")(config);\n```\nvisit in chrome: http://localhost:9527/user\n\n\n\n",
+  "readmeFilename": "README.md",
+  "gitHead": "d335724857d3fbb07cc11869afca97402ccddde3",
+  "description": "Simply and quickly make your owner MEAN application. ##Features * Real time MEAN application. * Simply and quickly make your own application with simple configuration. * Auto generating CRUD routes both in server and client, and CRUD action in Mongodb Model. * An User model within it, and with [passport.js](https://github.com/jaredhanson/passport) authenticate native",
+  "bugs": {
+    "url": "https://github.com/hcnode/ngNode/issues"
+  },
+  "homepage": "https://github.com/hcnode/ngNode",
+  "_id": "ngnode@2.0.2",
+  "_shasum": "82a105bd30eb801cf166ecb336d7cb46e04085dc",
+  "_from": "../ngNode",
+  "_resolved": "file:../ngNode"
 }

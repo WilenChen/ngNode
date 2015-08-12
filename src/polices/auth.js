@@ -21,9 +21,6 @@ function login(req, res) {
 		} else {
 			var userInfo = userInfos[0]._doc;
 			if (userInfo) {
-				for(var k in userInfo){
-					console.log(k, ":", userInfo[k]);
-				}
 				bcrypt.compare(password, userInfo.password, function (err, result) {
 					if(result){
 						req.session.user = userInfo;
@@ -82,11 +79,6 @@ module.exports = function (req, res, next) {
 			res.redirect("/logout");
 		}
 	} else {
-		//res.status(403).json({
-		//	code : 403,
-		//	err: "forbidden",
-		//	url: req.path
-		//})
 		res.redirect("/login");
 	}
 }

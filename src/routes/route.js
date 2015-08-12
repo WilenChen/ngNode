@@ -55,7 +55,7 @@ function setRoutes(modelConf) {
 			var realModelName = getModelName(req);
 			var Model = mongoose.model(realModelName);
 			var model = new Model(req.body);
-			Model.add(model, function (err) {
+			Model.add(req, res, model, function (err) {
 				res.json({err: err});
 			});
 		});
@@ -67,7 +67,7 @@ function setRoutes(modelConf) {
 			var model = new Model(req.body);
 			//res.json(model);return;
 
-			Model.update(model, function (err) {
+			Model.update(req, res, model, function (err) {
 				res.json({err: err});
 			})
 		});
@@ -77,7 +77,7 @@ function setRoutes(modelConf) {
 			var realModelName = getModelName(req);
 			var Model = mongoose.model(realModelName);
 			if (req.query.id) {
-				Model.remove(req.query.id, function (err) {
+				Model.remove(req, res, req.query.id, function (err) {
 					res.json({err: err});
 				})
 			}

@@ -44,8 +44,8 @@
             <tbody><tr>
                 <th class="id"></th>
 
-                <th ng-repeat="field in modelConf.schema" ng-if="field.text">
-                    <a ng-click="sortBy(field.name)" ng-if="field.sortable">{{field.text}} <i class="fa fa-sort"></i></a>
+                <th ng-repeat="(key, field) in modelConf.schema" ng-if="field.listable!==false">
+                    <a ng-click="sortBy(key)" ng-if="field.sortable">{{field.text}} <i class="fa fa-sort"></i></a>
                     {{field.sortable ? "" : field.text}}
                 </th>
                 <th></th>
@@ -68,7 +68,7 @@
                 </div>
             </td>
             </tr></tfoot>
-            <tfoot ng-show="items && items.length == 0"t>
+            <tfoot ng-show="items && items.length == 0">
             <tr ><td colspan="9">
                 <div class="text-center">
                     No records
@@ -78,7 +78,7 @@
             <tbody>
             <tr ng-repeat="item in items" >
                 <td style="width:30px;vertical-align: middle">{{$index}}</td>
-                <td ng-repeat="(key, value) in modelConf.schema" ng-if="value.text" style="max-width: 200px;vertical-align: middle">
+                <td ng-repeat="(key, value) in modelConf.schema" ng-if="value.listable!==false" style="max-width: 200px;vertical-align: middle">
                     <%- item%>
                     <i class='fa fa-check' ng-if="getEditType(value) == 'bool' && item[key]" ></i>
                     {{value.render ? value.render(item[key]) : item[key]}}
@@ -103,23 +103,23 @@
 
                 <div class="modal-body">
                     <form class="form-horizontal">
-                        <div class="form-group" ng-repeat="field in modelConf.schema" ng-if="field.editable!==false">
+                        <div class="form-group" ng-repeat="(key, field) in modelConf.schema" ng-if="field.editable!==false">
                             <label class="col-sm-2 control-label">{{field.text}}</label>
 
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" ng-model="editModel[field.name]"  ng-if="getEditType(field) == 'text'" />
-                                <textarea class="form-control autogrow" ng-if="getEditType(field) == 'textarea'" ng-model="editModel[field.name]" cols="5" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 50px;"></textarea>
+                                <input type="text" class="form-control" ng-model="editModel[key]"  ng-if="getEditType(field) == 'text'" />
+                                <textarea class="form-control autogrow" ng-if="getEditType(field) == 'textarea'" ng-model="editModel[key]" cols="5" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 50px;"></textarea>
                                 <div class="input-group" ng-if="getEditType(field) == 'date'">
-                                    <input type="text" ng-model="editModel[field.name]" class="form-control datepicker" data-format="yyyy-MM-dd" />
+                                    <input type="text" ng-model="editModel[key]" class="form-control datepicker" data-format="yyyy-MM-dd" />
                                     <div class="input-group-addon">
                                        <i class="fa fa-calendar"></i>
                                     </div>
                                 </div>
                                 <div class="form-block" ng-if="getEditType(field) == 'bool'" style="margin-top:5px;">
-                                    <input type="checkbox" ng-model="editModel[field.name]" class="iswitch iswitch-secondary">
+                                    <input type="checkbox" ng-model="editModel[key]" class="iswitch iswitch-secondary">
                                 </div>
-                                <select class="form-control" ng-if="getEditType(field) == 'list'" ng-model="editModel[field.name]">
-                                    <option ng-repeat="i in field.type" value="{{i}}">{{i}}</option>
+                                <select class="form-control" ng-if="getEditType(field) == 'list'" ng-model="editModel[key]">
+                                    <option ng-repeat="i in field.editType" value="{{i}}">{{i}}</option>
                                 </select>
                             </div>
                         </div>
@@ -165,6 +165,7 @@
 <script src="/assert_bower/angular/angular.min.js"></script>
 <script src="/assert_bower/requirejs/require.js"></script>
 <script src="/controller/extendRoutes.js"></script>
+<script src="/client/model/<%= model%>.js"></script>
 
 
 <script>
@@ -190,7 +191,7 @@
             });
         };
         $scope.save = function () {
-            $scope.modelConf.route.add($scope, $http, $scope.editModel, function (result) {
+            $scope.modelConf.route.addOrUpdate($scope, $http, $scope.editModel, function (result) {
                 if(result && result.err){
                     $scope.error = result.err;
                 }else{
@@ -277,9 +278,20 @@
         }
         $scope.crud = function (flag) {
 //            alert($scope.modelConf);
-            $scope.modelConf && $scope.modelConf.crud && $scope.modelConf.crud.indexOf(flag) > -1
+            return $scope.modelConf &&
+                    (!$scope.modelConf.crud || ($scope.modelConf.crud && $scope.modelConf.crud.indexOf(flag) > -1));
         }
-        require(['/model/<%= model%>.js'], function(modelConf) {
+
+        var modelConf = ModelConf();
+        modelConf.route = modelConf.route || {};
+        extendRoutes(modelConf);
+        $scope.modelConf = modelConf;
+        if(modelConf.scopeExtend){
+            $.extend($scope, modelConf.scopeExtend($scope, $http));
+        }
+        $scope.list();
+        /*require('<%= model%>', function(modelConf) {
+            modelConf = modelConf();
             modelConf.route = modelConf.route || {};
             extendRoutes(modelConf);
             $scope.modelConf = modelConf;
@@ -287,7 +299,7 @@
                 $.extend($scope, modelConf.scopeExtend($scope, $http));
             }
             $scope.list();
-        });
+        });*/
 
     };
 
