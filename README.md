@@ -16,16 +16,13 @@ This demo runs under MEAN, you can find some infomation about MEAN below.
 ##Usages
 dependencies:
 ```javascript
-"ngNode" : "^1.0.1"
+"ngnode": "2.0.4"
 ```
 make a config object and call lib as function directly
 ```javascript
 var config = {
 	appName : "testapp",
-	mongodConnection : "mongodb://localhost:27017/ngnode",
-	modelConfig : [
-    // custom model config object
-	]
+	mongodConnection : "mongodb://localhost:27017/ngnode"
 };
 require("ngNode")(config);
 ```
