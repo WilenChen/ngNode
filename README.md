@@ -1,5 +1,5 @@
 ## ngNode
-Simply and quickly make your owner MEAN application.
+Simply and quickly make your MEAN application.
 ##Features
 * Real time MEAN application.
 * Simply and quickly make your own application with simple configuration.
