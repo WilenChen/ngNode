@@ -12,14 +12,13 @@ function login(req, res) {
 		return;
 	}
 	var User = mongoose.model("user");
-	User.find({email: email}, function(err, userInfos) {
-		if (err) {
+	User.findOne({email: email}, function(err, userInfo) {
+		if (err || !userInfo) {
 			res.status(500).render({
 				err: err,
 				url: req.url
 			});
 		} else {
-			var userInfo = userInfos[0]._doc;
 			if (userInfo) {
 				bcrypt.compare(password, userInfo.password, function (err, result) {
 					if(result){

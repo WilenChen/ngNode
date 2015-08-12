@@ -2,7 +2,6 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var requirejs = require('requirejs');
 var session = require('express-session');
 var mongoStore = require('connect-mongo')((session));
 var www = require("./www");
@@ -13,21 +12,13 @@ module.exports = function (config) {
 	if(!mongodConnection){
 		throw "mongodConnection not found";
 	}
-	//var modelConf = config.modelConfig;
-	//if(!modelConf){
-	//	throw "modelConf not found";
-	//}
-	requirejs.config({
-		baseUrl: __dirname,
-		nodeRequire: require
-	});
 	var app = express();
 	app.set('views', path.join(__dirname + "/src", 'views'));
 	app.use(bodyParser.json());
 	app.use(bodyParser.urlencoded({ extended: false }));
 	app.use(cookieParser());
 	app.use(express.static(path.join(__dirname, 'src/public')));
-	app.use('/assert_bower', express.static(path.join(__dirname,  'bower_components')));
+	app.use('/bower_components', express.static(path.join(__dirname,  'bower_components')));
 	app.use(session({
 		secret: 'hcnode',
 		saveUninitialized : false,

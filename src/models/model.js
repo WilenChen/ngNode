@@ -20,7 +20,6 @@ module.exports = function (mongoose, modelConf, config) {
 				orQuery.push(tmp);
 			}
 			query = query.or(orQuery);
-			//query = query.or([{title:new RegExp(key, "gi")},{author:new RegExp(key, "gi")}]);
 		}
 		if(sort){
 			var sortObj = {};
@@ -49,25 +48,47 @@ module.exports = function (mongoose, modelConf, config) {
 		})
 	}
 	function hook(req, res, model, action, cb) {
-		if(config.on && config.on[action]){
-			config.on[action](req, res, model, cb);
-		}else{
+		var tCall = function (req, res, model, cb) {
 			cb(model);
+		};
+		var configHook = (config.on && config.on[action]) || tCall;
+		var modelHook = (modelConf.on && modelConf.on[action]) || tCall;
+		configHook(req, res, model, function (newModel) {
+			if(newModel.err){
+				cb(newModel);
+			}else {
+				modelHook(req, res, model, function (newModel) {
+					cb(newModel);
+				});
+			}
+		});
+	}
+
+	function getErrorResult(err, code, msg) {
+		return {
+			code : code || 500,
+			msg : msg || "",
+			err : err
 		}
 	}
 
 	Model.statics.update = function (req, res, model, call) {
 		hook(req, res, model, "beforeUpdate",  function (newModel) {
-			if(newModel.error){
-				call(err);
+			if(newModel.err){
+				call(getErrorResult(newModel.err, 500, "beforeUpdate"));
 			}else {
 				var Model = mongoose.model(modelConf.name);
 				Model.findOneAndUpdate({_id: model._id}, newModel, function (err) {
 					if (err) {
-						call(err);
+						call(getErrorResult(err));
 					} else {
 						hook(req, res, model, "afterUpdate", function (result) {
-							call((result || {}).error);
+							var err = result.err;
+							if (err) {
+								call(getErrorResult(err, 500, "afterUpdate"));
+							} else {
+								call(result);
+							}
 						});
 					}
 				})
@@ -77,16 +98,21 @@ module.exports = function (mongoose, modelConf, config) {
 	}
 	Model.statics.add = function (req, res, model, call) {
 		hook(req, res, model, "beforeCreate",  function (newModel) {
-			if(newModel.error){
-				call(err);
+			if(newModel.err){
+				call(getErrorResult(newModel.err, 500, "beforeCreate"));
 			}else {
 				var Model = mongoose.model(modelConf.name);
 				newModel.save(function (err, result) {
 					if (err) {
-						call(err);
+						call(getErrorResult(err));
 					} else {
 						hook(req, res, model, "afterCreate", function (result) {
-							call((result || {}).error);
+							var err = result.err;
+							if (err) {
+								call(getErrorResult(err, 500, "afterCreate"));
+							} else {
+								call(result);
+							}
 						});
 					}
 				});
@@ -95,16 +121,21 @@ module.exports = function (mongoose, modelConf, config) {
 	}
 	Model.statics.remove = function (req, res, id, call) {
 		hook(req, res, id, "beforeRemove",  function (newModel) {
-			if(newModel.error){
-				call(err);
+			if(newModel.err){
+				call(getErrorResult(newModel.err, 500, "beforeRemove"));
 			}else {
 				var Model = mongoose.model(modelConf.name);
 				Model.findByIdAndRemove({_id : id}, function (err) {
 					if (err) {
-						call(err);
+						call(getErrorResult(err));
 					} else {
 						hook(req, res, id, "afterRemove", function (result) {
-							call((result || {}).error);
+							var err = result.err;
+							if (err) {
+								call(getErrorResult(err, 500, "afterRemove"));
+							} else {
+								call(result);
+							}
 						});
 					}
 				})

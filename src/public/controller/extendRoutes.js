@@ -17,21 +17,21 @@ var extendRoutes = function (model) {
 			$http.get(url).success(function (data) {
 				call(data);
 			}).error(function (data, status) {
-				alert('get data error!');
+				call(data);
 			});
 		},
 		addOrUpdate : function($scope, $http, item, call){
 			$http.post(this.getBaseUrl() + (item._id ? "update" : "create"), item).success(function (data) {
 				call(data);
 			}).error(function (data, status) {
-				call('get data error!');
+				call(data);
 			});
 		},
 		remove : function($scope, $http, item, call){
 			$http.get(this.getBaseUrl() + "remove?id=" + item._id).success(function (data) {
 				call(data);
 			}).error(function (data, status) {
-				call('get data error!');
+				call(data);
 			});
 		}
 	})

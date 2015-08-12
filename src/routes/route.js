@@ -50,13 +50,20 @@ function setRoutes(modelConf) {
 			getResult(res, err, records);
 		});
 	});
+	function setRes(res, result) {
+		if(result && result.err){
+			res.status(result.code || 500);
+		}
+		res.json(result);
+	}
+
 	if(!modelConf.crud || modelConf.crud.indexOf("c") > -1) {
 		router.post('/api/create', function (req, res, next) {
 			var realModelName = getModelName(req);
 			var Model = mongoose.model(realModelName);
 			var model = new Model(req.body);
-			Model.add(req, res, model, function (err) {
-				res.json({err: err});
+			Model.add(req, res, model, function (result) {
+				setRes(res, result);
 			});
 		});
 	}
@@ -65,10 +72,8 @@ function setRoutes(modelConf) {
 			var realModelName = getModelName(req);
 			var Model = mongoose.model(realModelName);
 			var model = new Model(req.body);
-			//res.json(model);return;
-
-			Model.update(req, res, model, function (err) {
-				res.json({err: err});
+			Model.update(req, res, model, function (result) {
+				setRes(res, result);
 			})
 		});
 	}
@@ -77,8 +82,8 @@ function setRoutes(modelConf) {
 			var realModelName = getModelName(req);
 			var Model = mongoose.model(realModelName);
 			if (req.query.id) {
-				Model.remove(req, res, req.query.id, function (err) {
-					res.json({err: err});
+				Model.remove(req, res, req.query.id, function (result) {
+					setRes(res, result);
 				})
 			}
 

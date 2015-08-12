@@ -18,14 +18,16 @@ module.exports = {
 		});
 	},
 	createCustom : function(app, config, appDir){
-		var path =  "../../../../models/";
+		var path =  (config.appPath || appDir) + "/models/";
+		//var path =  "../../../../models/";
 		var that = this;
-		var files = fs.readdirSync(__dirname + "/" + path);
+		//var files = fs.readdirSync(__dirname + "/" + path);
+		var files = fs.readdirSync(path);
 		for(var i=0;i<files.length;i++){
 			var model = files[i].replace(".js", "");
 			that.init(model, path);
 			var Model = require(path + model);
-			var customModel = Model.apply(Model);
+			var customModel = Model.call(Model);
 			require('./model')(mongoose, customModel, config);
 			customModel.initData && customModel.initData(mongoose);
 			app.use('/' + customModel.name, route(customModel));
