@@ -25,9 +25,9 @@ var config = {
 	mongodConnection : "mongodb://localhost:27017/ngnode",
 	on : {
 		"someaction" : function (req, res, model, cb) {
-			// hook all models here you want when "someaction" action.
-			// and can't be defined in the model config as well
-			// see the model config for detail
+			// hook all models here you want when "someaction" execute.
+			// and can define in the model config as well
+			// see the model config below for detail
 		}
 	}
 };
@@ -35,24 +35,26 @@ require("ngNode")(config);
 ```
 
 ##How simply ngNode be?
-with simple config object above, a web application is made, and a default model "user" .
-and you can make your own model as well, once a custom model is made,  what ngNode will do with the custom model?
+with simple config object above, the ngNode application is made, and a default model "user" is defined in it. 
+and you can make your own model as well, once a custom model is created and app start,  what ngNode will do with the custom model?
+
 **In server side**
- 1. data collection is created with the schema which in model config
+ 1. data collection is created with the schema which define in model config
  2. service with crud actions are created
  3. crud routers are created
- 4. custom data init when the app is started
+ 4. custom data init when the app start
  5. custom hooks inject in crud actions
 
 **In client side**
  1. custom fields of collection with display title, sortable field, query fields, edit type.
  2. auto generate data table with custom page size and page toolbar
- 3. auto generate create, edit and remove link and the client side routers and ajax request as well
- 4. display field value in either default value or custom "render" function
- 5. muti edit types are support, including normal text, textarea, datepicker, checkbox, select.
+ 3. auto generate "create", "edit" and "remove" link and client side routers and ajax request as well
+ 4. display field value in either default value or return form custom "render" function
+ 5. multi edit types are support, including normal text, textarea, datepicker, checkbox, date list.
 
 ## How to define custom model
 ngNode will try to find models in your app's "/models" folder
+
 the follow json config is what the custom model config look like:
  
 ```javascript
@@ -90,7 +92,7 @@ the follow json config is what the custom model config look like:
 ```
 
 ## A model config which define in node.js module style can use in browser? how?
-When the app start, ngNode will pack the custom model module into browser's object by use [browserify](http://browserify.org/)
+When the app start, ngNode will pack the custom model module into browser's object by use [browserify](http://browserify.org/), it is awesome, is it?
 
 ## Sample
 An ngNode's sample can be found in [ngNode-sample](https://github.com/hcnode/ngNode-sample)
