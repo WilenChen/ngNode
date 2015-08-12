@@ -47,11 +47,11 @@ and you can make your own model as well, once a custom model is made,  what ngNo
  5. custom hooks inject in crud actions
 
 **In client side**
-1. custom fields of collection with display title, sortable field, query fields, edit type.
-2. auto generate data table with custom page size and page toolbar
-3. auto generate create, edit and remove link and the client side routers and ajax request as well
-4. display field value in either default value or custom "render" function
-5. muti edit types are support, including normal text, textarea, datepicker, checkbox, select.
+ 1. custom fields of collection with display title, sortable field, query fields, edit type.
+ 2. auto generate data table with custom page size and page toolbar
+ 3. auto generate create, edit and remove link and the client side routers and ajax request as well
+ 4. display field value in either default value or custom "render" function
+ 5. muti edit types are support, including normal text, textarea, datepicker, checkbox, select.
 
 ## How to define custom model
 ngNode will try to find models in your app's "/models" folder
@@ -96,7 +96,7 @@ When the app start, ngNode will pack the custom model module into browser's obje
 
 ## Sample
 An ngNode's sample can be found in [ngNode-sample](https://github.com/hcnode/ngNode-sample)
-git clone and run `npm install` and run `npm start`
+ git clone and run `npm install` and run `npm start`
  
 
 
