@@ -16,7 +16,7 @@ This library runs under MEAN, you can find some infomation about MEAN below.
 ##Usages
 dependencies:
 ```javascript
-"ngnode": "2.0.4"
+"ngnode": "2.0.5"
 ```
 make a config object and call ngNode as function directly
 ```javascript
