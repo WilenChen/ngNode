@@ -2,11 +2,11 @@
 Simply and quickly make your MEAN application.
 ##Features
 * Real time MEAN application.
-* Simply and quickly make your own application with simple configuration.
-* Auto generating CRUD routes both in server and client, and CRUD action in Mongodb Model.
-* An User model within it, and with [passport.js](https://github.com/jaredhanson/passport) authenticate native
+* Simply and quickly make your own application with simple model config object, anything else need to do? no! nothing else!
+* Auto generate all things including mongodb collection, CRUD router, datatable, sorting, paging, search, data edit, etc.
+* An User model within it, and with [passport.js](https://github.com/jaredhanson/passport) authentication
 
-##Before You Begin
+##Before You Begin, you may want to know:
 This library runs under MEAN, you can find some infomation about MEAN below.
 * MongoDB - Go through [MongoDB Official Website](http://mongodb.org/) and proceed to their [Official Manual](http://docs.mongodb.org/manual/), which should help you understand NoSQL and MongoDB better.
 * Express - The best way to understand express is through its [Official Website](http://expressjs.com/), which has a [Getting Started](http://expressjs.com/starter/installing.html) guide, as well as an [ExpressJS Guide](http://expressjs.com/guide/error-handling.html) guide for general express topics. You can also go through this [StackOverflow Thread](http://stackoverflow.com/questions/8144214/learning-express-for-node-js) for more resources.
