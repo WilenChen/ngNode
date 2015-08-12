@@ -97,7 +97,7 @@ When the app start, ngNode will pack the custom model module into browser's obje
 ## Sample
 An ngNode's sample can be found in [ngNode-sample](https://github.com/hcnode/ngNode-sample)
  - git clone and run `npm install` and run `npm start`
- - visit in chrome: http://localhost:9527/user or http://localhost:9527/blog or http://localhost:9527/yourownmodel
+ - visit in chrome: `http://localhost:9527/user` or `http://localhost:9527/blog` or `http://localhost:9527/yourownmodel`
  - login with test@163.com/test
  
 
