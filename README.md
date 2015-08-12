@@ -34,8 +34,6 @@ var config = {
 require("ngNode")(config);
 ```
 
-run and visit in chrome: http://localhost:9527/user login with test@163.com/test
-
 ##How simply ngNode be?
 with simple config object above, a web application is made, and a default model "user" .
 and you can make your own model as well, once a custom model is made,  what ngNode will do with the custom model?
@@ -96,7 +94,9 @@ When the app start, ngNode will pack the custom model module into browser's obje
 
 ## Sample
 An ngNode's sample can be found in [ngNode-sample](https://github.com/hcnode/ngNode-sample)
- git clone and run `npm install` and run `npm start`
+ - git clone and run `npm install` and run `npm start`
+ - visit in chrome: http://localhost:9527/user or http://localhost:9527/blog or http://localhost:9527/yourownmodel
+ - login with test@163.com/test
  
 
 
