@@ -1,9 +1,9 @@
 ## ngNode
-Simply and quickly make your MEAN application.
+Simply and Quickly build your MEAN application.
 ##Features
 * Real time MEAN application.
-* Simply and quickly make your own application with simple model config object, anything else need to do? no! nothing else!
-* Auto generate all things including mongodb collection, CRUD router, datatable, sorting, paging, search, data edit, etc.
+* Simply and quickly build web application with simple model config object, anything else need to do? no! nothing else!
+* Auto generate all things including mongodb collection, CRUD api, datatable, sorting, paging, searching, editing data, etc.
 * An User model within it, and with [passport.js](https://github.com/jaredhanson/passport) authentication
 
 ##Before You Begin, you may want to know:
@@ -14,11 +14,15 @@ This library runs under MEAN, you can find some infomation about MEAN below.
 * Node.js - Start by going through [Node.js Official Website](http://nodejs.org/) and this [StackOverflow Thread](http://stackoverflow.com/questions/2353818/how-do-i-get-started-with-node-js), which should get you going with the Node.js platform in no time.
 
 ##Usages
-dependencies:
+dependency:
 ```javascript
 "ngnode": "2.0.5"
 ```
-make a config object and call ngNode as function directly
+install dependency
+```bash
+npm install
+```
+make a config object and call ngNode as function
 ```javascript
 var config = {
 	appName : "testapp",
@@ -34,70 +38,89 @@ var config = {
 require("ngNode")(config);
 ```
 
+and save as app.js and run
+```bash
+node app.js
+```
+guess what? a MEAN application you have built! it is really simple, is it?
+
 ##How simply ngNode be?
-with simple config object above, the ngNode application is made, and a default model "user" is defined in it. 
+with simple config object above, we can quickly build a MEAN application, and a default model "user" in it.
+
 and you can make your own model as well, once a custom model is created and app start,  what ngNode will do with the custom model?
 
 **In server side**
- 1. data collection is created with the schema which define in model config
- 2. service with crud actions are created
- 3. crud routers are created
- 4. custom data init when the app start
+ 1. mongodb model collection is created with the schema which define in model config
+ 2. auto create service with crud actions
+ 3. auto create crud routers
+ 4. initialize data from initData config when the app start
  5. custom hooks inject in crud actions
 
 **In client side**
- 1. custom fields of collection with display title, sortable field, query fields, edit type.
- 2. auto generate data table with custom page size and page toolbar
- 3. auto generate "create", "edit" and "remove" link and client side routers and ajax request as well
+ 1. custom fields of collection with title, sortable, queryable, edit type.
+ 2. auto generate data table with custom page size and pagination
+ 3. auto generate "create", "edit" and "remove" link, client side routers and ajax request as well
  4. display field value in either default value or return form custom "render" function
- 5. multi edit types are support, including normal text, textarea, datepicker, checkbox, date list.
+ 5. multi edit types are support, including simple text, textarea, datepicker, checkbox, date list.
 
 ## How to define custom model
 ngNode will try to find models in your app's "/models" folder
 
-the follow json config is what the custom model config look like:
+the follow model module is what the custom model config look like:
  
 ```javascript
-{
-	name: "blog", // model name, would be used as the name in mongodb collection
-	schema: { // collection's fields schema defined
-		title: {
-			text: "Title", // display in header of table
-			type: String, // type defined in mongoose
-			editType : "textarea" // [optional] edit type, default is simple text
-			editable : true, // [optional] can to be edit? default is true
-			sortable: true, // [optional] can to be sort? default is false
-			render : function(data){ // [optional] custom field's content to display
-				// data : field's content
-				// return something you want, or return data with do nothing as default do
-			}
-		},
-		... other fields
-	}
-	defSortField: "title", // default sort field
-	queryFields: ["title"], // fields you want to query when search
-	defaultPageSize: 15, // default page size
-	on: { // hook only in this model, if you want to hook all model, this should define in application config's "on"
-		"beforeCreate": function (req, res, model, cb) {
-			// do something you want before create
-			cb(model); // callback and continue to create the "model" 
-			cb({err : "something wrong and i don't want to continue to create this 'model'"});
-			// so avoid the model object has the key "err" when you want to continue the action
-		}
-	},
-	initData : function(mongoose){
-		// this function will be called when the app is started
-	}
-}
+module.exports = function () {
+	return {
+        name: "blog", // model name, would be used as the name in mongodb collection
+        schema: { // collection's fields schema defined
+            title: { // field name in mongodb
+                text: "Title", // display in header of datatable
+                type: String, // define type in mongoose
+                editType : "textarea" // [optional] edit type, default is simple text
+                editable : true, // [optional] can edit? default is true
+                sortable: true, // [optional] can sort? default is false
+                render : function(data){ // [optional] custom field's content to display
+                                // data : field's content
+                    // return something you want, or return data with do nothing as default do
+                }
+            },
+            ... other fields
+        }
+        defSortField: "title", // default sort field
+        queryFields: ["title"], // fields you want to query when searching
+        defaultPageSize: 15, // default page size
+        on: { // hook only in this model, if you want to hook all model, this should define this in application config's "on"
+            "beforeCreate": function (req, res, model, cb) {
+                // do something you want before create
+                cb(model); // callback and continue to create the "model"
+                cb({err : "something wrong and i don't want to continue to create this 'model'"});
+                // so avoid the model object has the key "err" when you want to continue the action
+            }
+        },
+        initData : function(mongoose){
+            // this function will be called when the app is started
+        }
+    }
+};
 ```
 
 ## A model config which define in node.js module style can use in browser? how?
 When the app start, ngNode will pack the custom model module into browser's object by use [browserify](http://browserify.org/), it is awesome, is it?
 
+## dependencies in ngNode
+ - express : ngNode is a framework of MEAN, so express is included
+ - mongoose : my first choice mongodb ORM
+ - passport: I use passport as authentication
+ - express-session : use express-session to maintain user authentication
+ - connect-mongo : and use mongodb as session store in express-session
+ - browserify : model module used in server side and browser side, browserify definitely
+ - bcrypt : user model use bcrypt to encode password when create user, and compare password when user login
+
+
 ## Sample
 An ngNode's sample can be found in [ngNode-sample](https://github.com/hcnode/ngNode-sample)
  - git clone and run `npm install` and run `npm start`
- - visit in chrome: `http://localhost:9527/user` or `http://localhost:9527/blog` or `http://localhost:9527/yourownmodel`
+ - visit in chrome: `http://localhost:9527/user` or `http://localhost:9527/blog` or `http://localhost:9527/yourownmodel` when you add "yourownmodel"
  - login with test@163.com/test
  
 
