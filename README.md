@@ -108,13 +108,13 @@ module.exports = function () {
 When the app start, ngNode will pack the custom model module into browser's object by use [browserify](http://browserify.org/), it is awesome, is it?
 
 ## dependencies in ngNode
- - express : ngNode is a framework of MEAN, so express is included
- - mongoose : my first choice mongodb ORM
- - passport: I use passport as authentication
- - express-session : use express-session to maintain user authentication
- - connect-mongo : and use mongodb as session store in express-session
- - browserify : model module used in server side and browser side, browserify definitely
- - bcrypt : user model use bcrypt to encode password when create user, and compare password when user login
+ - [express](http://expressjs.com) : ngNode is a framework of MEAN, so express is included
+ - [mongoose](http://mongoosejs.com) : my first choice mongodb ORM
+ - [passport](http://passportjs.org): I use passport as authentication
+ - [express-session](https://github.com/expressjs/session) : use express-session to maintain user authentication
+ - [connect-mongo](https://github.com/kcbanner/connect-mongo) : and use mongodb as session store in express-session
+ - [browserify](http://browserify.org) : model module used in server side and browser side, browserify definitely
+ - [bcrypt](https://github.com/ncb000gt/node.bcrypt.js) : user model use bcrypt to encode password when create user, and compare password when user login
 
 
 ## Sample
