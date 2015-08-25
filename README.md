@@ -1,3 +1,4 @@
+[中文版README](http://hcnode.github.io/2015/08/17/ngnode/)
 ## ngNode
 Simply and Quickly build your MEAN application.
 ##Features
